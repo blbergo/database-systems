@@ -1,4 +1,5 @@
 -- Seed data for Database Systems Lab #1
+-- This data is designed to test all the queries specified in the lab
 
 -- Insert Course data
 INSERT INTO Course (CourseName, Nunit) VALUES 
@@ -46,7 +47,7 @@ INSERT INTO Teacher (CourseN, Quarter, TeacherName) VALUES
 
 -- Insert LocationNTime data
 INSERT INTO LocationNTime (CourseN, Quarter, DayTime, RoomN) VALUES 
--- Karen Reed's courses with room 713
+-- Karen Reed's courses with room 33
 (1, 'Spring2005', 'M10:00AM', '713'),
 (2, 'Spring2005', 'W2:00PM', '713'),
 
