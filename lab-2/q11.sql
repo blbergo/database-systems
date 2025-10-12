@@ -1,0 +1,2 @@
+SELECT DISTINCT Course.CourseNumber, Course.CourseTitle as first_course, C2.CourseTitle as second_course FROM Course
+JOIN Course C2 ON Course.PrerequisiteCourseNumber = C2.CourseNumber AND Course.CourseTitle != C2.CourseTitle;
