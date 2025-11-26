@@ -59,5 +59,15 @@ public class Service {
         repo.printResults(result);
     }
 
-    
+    public void getTripStopInfo(int TripNumber) {
+        String query = """
+            SELECT TripStopInfo.TripNumber, TripStopInfo.StopNumber, TripStopInfo.SequenceNumber, TripStopInfo.DrivingTime FROM TripStopInfo
+            JOIN Trip ON Trip.TripNumber = TripStopInfo.TripNumber
+            WHERE Trip.TripNumber = %s;
+            """;
+
+        query = String.format(query, TripNumber);
+        Optional<ResultSet> result = repo.executeQuery(query);
+        repo.printResults(result);
+    }
 }

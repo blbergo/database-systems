@@ -51,7 +51,7 @@ public class Repository {
                 while (rs.next()) {
                     String row = "";
 
-                    for(int i = 1; i < columns.getColumnCount(); i++) {
+                    for(int i = 1; i <= columns.getColumnCount(); i++) {
                         row += "| " + rs.getString(i);
                     }
                     row += " |";
