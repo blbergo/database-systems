@@ -6,6 +6,6 @@ public class App {
     public static void main(String[] args) {
         Repository repo = new Repository("postgres", "postgres");
         Service service = new Service(repo);
-        service.getTripStopInfo(1);
+        service.getDriverSchedule("Alice Johnson", "2025-11-25");
     }
 }

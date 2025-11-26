@@ -70,4 +70,15 @@ public class Service {
         Optional<ResultSet> result = repo.executeQuery(query);
         repo.printResults(result);
     }
+
+    public void getDriverSchedule(String DriverName, String Date) {
+        String query = """
+            SELECT * FROM TripOffering
+            WHERE DriverName = '%s' AND Date >= '%s' and Date <= date('%s') + INTERVAL '7 days';
+            """;
+
+        query = String.format(query, DriverName, Date, Date);
+        Optional<ResultSet> result = repo.executeQuery(query);
+        repo.printResults(result);
+    }
 }
