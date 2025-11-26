@@ -81,4 +81,14 @@ public class Service {
         Optional<ResultSet> result = repo.executeQuery(query);
         repo.printResults(result);
     }
+
+    public void createDriver(String DriverName, String TelephoneNumber) {
+        String query = """
+            INSERT INTO Driver (DriverName, TelephoneNumber) VALUES
+            ('%s', '%s');    
+            """;
+        query = String.format(query, DriverName, TelephoneNumber);
+        Optional<ResultSet> result = repo.executeQuery(query);
+        repo.printResults(result);
+    }
 }
