@@ -15,7 +15,7 @@ public class Service {
         String query = """
             SELECT Trip.StartLocationName, Trip.DestinationName, Offering.Date, Offering.ScheduledStartTime, Offering.ScheduledArrivalTime, Offering.DriverName, Offering.BusID FROM Trip
             JOIN TripOffering AS Offering ON Trip.TripNumber = Offering.TripNumber
-            WHERE StartLocationName = '%s' AND DestinationName = '%s' AND Date = '%s';
+            WHERE StartLocationName LIKE '%s' AND DestinationName LIKE '%s' AND Date = '%s';
         """;
         query = String.format(query, startLocationName, destName, date);
 
@@ -84,7 +84,7 @@ public class Service {
 
     public void createDriver(String DriverName, String TelephoneNumber) {
         String query = """
-            INSERT INTO Driver (DriverName, TelephoneNumber) VALUES
+            INSERT INTO Driver (DriverName, DriverTelephoneNumber) VALUES
             ('%s', '%s');    
             """;
         query = String.format(query, DriverName, TelephoneNumber);
@@ -109,6 +109,18 @@ public class Service {
             WHERE BusID = %s;    
             """;
         query = String.format(query, BusID);
+
+        Optional<ResultSet> result = repo.executeQuery(query);
+        repo.printResults(result);
+    }
+
+    public void recordStopInfo(int TripNumber, String Date, String ScheduledStartTime, int StopNumber, String ScheduledStopArrivalTime, String ActualStartTime, String ActualArrivalTime, int NumberOfPassengersIn, int NumberOfPassengersOut) {
+        String query = """
+            INSERT INTO ActualTripStopInfo (TripNumber, Date, ScheduledStartTime, StopNumber, ScheduledStopArrivalTime, ActualStartTime, ActualArrivalTime, NumberOfPassengersIn, NumberOfPassengersOut)
+            VALUES (%s, '%s', '%s', %s, '%s', '%s', '%s', %s, %s);    
+            """;
+
+        query = String.format(query, TripNumber, Date, ScheduledStartTime, StopNumber, ScheduledStopArrivalTime, ActualStartTime, ActualArrivalTime, NumberOfPassengersIn, NumberOfPassengersOut);
 
         Optional<ResultSet> result = repo.executeQuery(query);
         repo.printResults(result);

@@ -35,3 +35,7 @@ application {
     // Define the main class for the application.
     mainClass = "com.lab4.App"
 }
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
