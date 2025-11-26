@@ -105,7 +105,7 @@ public class Service {
 
     public void deleteBus(int BusID) {
         String query = """
-            DELETE FROM TABLE Bus
+            DELETE FROM Bus
             WHERE BusID = %s;    
             """;
         query = String.format(query, BusID);

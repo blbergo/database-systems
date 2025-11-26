@@ -13,42 +13,47 @@ public class App {
     public static void main(String[] args) {
 
         String basePrompt = """
-            Please select one of the following options:
-            [1] Retrieve all schedules for a start and end destination.
-            [2] Edit the schedule of a trip.
-            [3] Retrieve stops for a trip.
-            [4] Display the weekly schedule of a driver.
-            [5] Add a driver.
-            [6] Add a bus.
-            [7] Delete a bus.
-            [8] Record trip info.
-            [9] Quit.
-            """; 
+                Please select one of the following options:
+                [1] Retrieve all schedules for a start and end destination.
+                [2] Edit the schedule of a trip.
+                [3] Retrieve stops for a trip.
+                [4] Display the weekly schedule of a driver.
+                [5] Add a driver.
+                [6] Add a bus.
+                [7] Delete a bus.
+                [8] Record trip info.
+                [9] Quit.
+                """;
 
-     
         int menuChoice = 10;
-        
+
         do {
-        System.out.println(basePrompt);
+            System.out.println(basePrompt);
             menuChoice = Integer.parseInt(scan.nextLine());
 
-            switch(menuChoice) {
+            switch (menuChoice) {
                 case 1:
-                    getTripSchedules();   
+                    getTripSchedules();
                     break;
                 case 3:
                     getTripStops();
-                    break;    
+                    break;
                 case 4:
                     getWeeklyScheduleForDriver();
-                    break;       
+                    break;
                 case 5:
                     addDriver();
-                    break;      
+                    break;
+                case 6:
+                    addBus();
+                    break;
+                case 7:
+                    deleteBus();
+                    break;
             }
 
-        } while(menuChoice != 9);
-    
+        } while (menuChoice != 9);
+
         scan.close();
     }
 
@@ -56,7 +61,7 @@ public class App {
         String tripSchedulePrompt = "> Enter the startLocationName, destinationName and date separated by a comma:";
         System.out.println(tripSchedulePrompt);
         String response = scan.nextLine();
-        
+
         String[] args = response.split(",");
 
         service.getTripSchedules(args[0], args[1], args[2]);
@@ -68,7 +73,7 @@ public class App {
         String tripStopsPrompt = "> Enter the trip number:";
         System.out.println(tripStopsPrompt);
         String response = scan.nextLine();
-        
+
         String[] args = response.split(",");
 
         service.getTripStopInfo(Integer.parseInt(args[0]));
@@ -80,7 +85,7 @@ public class App {
         String tripStopsPrompt = "> Enter the driver name and start date separated by a comma:";
         System.out.println(tripStopsPrompt);
         String response = scan.nextLine();
-        
+
         String[] args = response.split(",");
 
         service.getDriverSchedule(args[0], args[1]);
@@ -92,10 +97,34 @@ public class App {
         String newDriverPrompt = "> Enter the driver name and telephone number separated by a comma:";
         System.out.println(newDriverPrompt);
         String response = scan.nextLine();
-        
+
         String[] args = response.split(",");
 
         service.createDriver(args[0], args[1]);
+        System.out.println("> Press any key to return to the menu.");
+        scan.nextLine();
+    }
+
+    private static void addBus() {
+        String newBusPrompt = "> Enter the bus ID, model and year separated by a comma:";
+        System.out.println(newBusPrompt);
+        String response = scan.nextLine();
+
+        String[] args = response.split(",");
+
+        service.createBus(Integer.parseInt(args[0]), args[1], Integer.parseInt(args[2]));
+        System.out.println("> Press any key to return to the menu.");
+        scan.nextLine();
+    }
+
+    private static void deleteBus() {
+        String newBusPrompt = "> Enter the bus ID:";
+        System.out.println(newBusPrompt);
+        String response = scan.nextLine();
+
+        String[] args = response.split(",");
+
+        service.deleteBus(Integer.parseInt(args[0]));
         System.out.println("> Press any key to return to the menu.");
         scan.nextLine();
     }
