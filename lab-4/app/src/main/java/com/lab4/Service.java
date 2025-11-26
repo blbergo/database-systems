@@ -46,14 +46,14 @@ public class Service {
         repo.printResults(result);
     }
 
-    public void swapBusForTrip(int TripNumber, int newBusId) {
+    public void swapBusForTrip(int TripNumber, int newBusID) {
         String query = """
             UPDATE TABLE TripOffering
             WHERE TripNumber = %s
-            SET BusId = %s;    
+            SET BusID = %s;    
             """;
 
-        query = String.format(query, TripNumber, newBusId);
+        query = String.format(query, TripNumber, newBusID);
 
         Optional<ResultSet> result = repo.executeQuery(query);
         repo.printResults(result);
@@ -88,6 +88,28 @@ public class Service {
             ('%s', '%s');    
             """;
         query = String.format(query, DriverName, TelephoneNumber);
+        Optional<ResultSet> result = repo.executeQuery(query);
+        repo.printResults(result);
+    }
+
+    public void createBus(int BusID, String Model, int Year) {
+        String query = """
+            INSERT INTO Bus (BusID, Model, Year) 
+            VALUES (%s, '%s', %s);    
+            """;
+        query = String.format(query, BusID, Model, Year);
+
+        Optional<ResultSet> result = repo.executeQuery(query);
+        repo.printResults(result);
+    }
+
+    public void deleteBus(int BusID) {
+        String query = """
+            DELETE FROM TABLE Bus
+            WHERE BusID = %s;    
+            """;
+        query = String.format(query, BusID);
+
         Optional<ResultSet> result = repo.executeQuery(query);
         repo.printResults(result);
     }
