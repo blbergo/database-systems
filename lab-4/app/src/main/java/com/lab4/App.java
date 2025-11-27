@@ -53,6 +53,9 @@ public class App {
                 case 7:
                     deleteBus();
                     break;
+                case 8:
+                    recordTripInfo();
+                    break;
             }
 
         } while (menuChoice != 9);
@@ -165,6 +168,18 @@ public class App {
         String[] args = response.split(",");
 
         service.deleteBus(Integer.parseInt(args[0]));
+        System.out.println("> Press any key to return to the menu.");
+        scan.nextLine();
+    }
+
+    private static void recordTripInfo() {
+        String newBusPrompt = "> Enter the trip number, date, scheduled start time, stop number, scheduled arrival time, actual start time, actual arrival time, number of passenger in and number of passengers out separated by a comma:";
+        System.out.println(newBusPrompt);
+        String response = scan.nextLine();
+
+        String[] args = response.split(",");
+
+        service.recordStopInfo(Integer.parseInt(args[0]), args[1], args[2], Integer.parseInt(args[3]), args[4], args[5], args[6], Integer.parseInt(args[7]), Integer.parseInt(args[8]));
         System.out.println("> Press any key to return to the menu.");
         scan.nextLine();
     }
