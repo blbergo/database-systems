@@ -25,8 +25,8 @@ public class Service {
 
     public void deleteTripOffering(int TripNumber, String Date, String ScheduledStartTime) {
         String query = """
-            DELETE FROM TABLE TripOffering 
-            WHERE TripNumber = %s AND Date = %s AND ScheduledStartTime = %s;
+            DELETE FROM TripOffering 
+            WHERE TripNumber = %s AND Date = '%s' AND ScheduledStartTime = '%s';
             """;
 
         query = String.format(query, TripNumber, Date, ScheduledStartTime);
@@ -38,7 +38,7 @@ public class Service {
     public void createTripOffering(int TripNumber, String Date, String ScheduledStartTime, String ScheduledArrivalTime, String DriverName, int BusID) {
         String query = """
             INSERT INTO TripOffering (TripNumber, Date, ScheduledStartTime, ScheduledArrivalTime, DriverName, BusID) VALUES
-            (%s, %s, %s, %s, %s, %s);    
+            (%s, '%s', '%s', '%s', '%s', %s);    
             """;
         query = String.format(query, TripNumber, Date, ScheduledStartTime, ScheduledArrivalTime, DriverName, BusID);
 
@@ -46,14 +46,27 @@ public class Service {
         repo.printResults(result);
     }
 
-    public void swapBusForTrip(int TripNumber, int newBusID) {
+    public void swapBusForTrip(int TripNumber, String Date, String ScheduledStartTime, int newBusID) {
         String query = """
-            UPDATE TABLE TripOffering
-            WHERE TripNumber = %s
-            SET BusID = %s;    
+            UPDATE TripOffering
+            SET BusID = %s
+            WHERE TripNumber = %s AND Date = '%s' AND ScheduledStartTime = '%s';
             """;
 
-        query = String.format(query, TripNumber, newBusID);
+        query = String.format(query, newBusID, TripNumber, Date, ScheduledStartTime);
+
+        Optional<ResultSet> result = repo.executeQuery(query);
+        repo.printResults(result);
+    }
+
+    public void swapDriverFortrip(int TripNumber, String Date, String ScheduledStartTime, String DriverName) {
+        String query = """
+            UPDATE TripOffering
+            SET DriverName = '%s'  
+            WHERE TripNumber = %s AND Date = '%s' AND ScheduledStartTime = '%s';
+            """;
+
+        query = String.format(query, DriverName, TripNumber, Date, ScheduledStartTime);
 
         Optional<ResultSet> result = repo.executeQuery(query);
         repo.printResults(result);

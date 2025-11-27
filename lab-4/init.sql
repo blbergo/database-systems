@@ -24,8 +24,8 @@ CREATE TABLE TripOffering (
     Date DATE NOT NULL,
     ScheduledStartTime TIME WITHOUT TIME ZONE NOT NULL,
     ScheduledArrivalTime TIME WITHOUT TIME ZONE NOT NULL,
-    DriverName VARCHAR(255) REFERENCES Driver (DriverName),
-    BusID INT REFERENCES Bus (BusID),
+    DriverName VARCHAR(255) REFERENCES Driver (DriverName) ON DELETE CASCADE,
+    BusID INT REFERENCES Bus (BusID) ON DELETE CASCADE,
     
     PRIMARY KEY (TripNumber, Date, ScheduledStartTime)
 );
@@ -36,8 +36,8 @@ CREATE TABLE Stop (
 );
 
 CREATE TABLE TripStopInfo (
-    TripNumber INT REFERENCES Trip (TripNumber),
-    StopNumber INT REFERENCES Stop (StopNumber),
+    TripNumber INT REFERENCES Trip (TripNumber) ON DELETE CASCADE,
+    StopNumber INT REFERENCES Stop (StopNumber) ON DELETE CASCADE,
     SequenceNumber INT,
     DrivingTime INTERVAL, -- Using INTERVAL for duration
     
@@ -62,7 +62,7 @@ CREATE TABLE ActualTripStopInfo (
     
     -- Composite Foreign Key referencing TripOffering
     FOREIGN KEY (TripNumber, Date, ScheduledStartTime) 
-        REFERENCES TripOffering (TripNumber, Date, ScheduledStartTime)
+        REFERENCES TripOffering (TripNumber, Date, ScheduledStartTime) ON DELETE CASCADE
 );
 
 -- ============================
